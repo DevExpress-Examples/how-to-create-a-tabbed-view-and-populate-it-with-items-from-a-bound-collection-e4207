@@ -1,0 +1,65 @@
+﻿<Page
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:TabbedViewSample"
+    xmlns:data="using:TabbedViewSample.Data"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    
+    xmlns:Layout="using:DevExpress.UI.Xaml.Layout"
+    xmlns:dxEditors="using:DevExpress.UI.Xaml.Editors"
+    
+    x:Class="TabbedViewSample.MainPage"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <data:EmployeesData x:Key="sampleEmployeesData" />
+    </Page.Resources>
+
+    <Grid  DataContext="{StaticResource sampleEmployeesData}" Background="White">
+        <!--Bind TabbedView to a collection of items (sampleEmployeesData.DataSource)-->
+        <Layout:TabbedView ItemsSource="{Binding DataSource}">
+            <!--The template to visualize an item's header-->
+            <Layout:TabbedView.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding FullName}"/>
+                </DataTemplate>
+            </Layout:TabbedView.ItemTemplate>
+            <!--The template to visualize an item's contents-->
+            <Layout:TabbedView.ContentTemplate>
+                <DataTemplate>
+                    <Layout:LayoutControl 
+                            Header="{Binding FullName}" HeaderStringFormat="{}Contact: {0}"
+                            Orientation="Vertical" 
+                            VerticalAlignment="Top" HorizontalAlignment="Center" Margin="40,40"
+                        >
+                        <Layout:LayoutGroup >
+                            <Layout:LayoutGroup Orientation="Vertical">
+                                <Layout:LayoutItem Header="First Name:" HeaderPosition="Top" Required="True">
+                                    <dxEditors:TextEdit EditValue="{Binding FirstName, Mode=TwoWay}" Width="150"/>
+                                </Layout:LayoutItem>
+                                <Layout:LayoutItem Header="Last Name:" HeaderPosition="Top" Required="True">
+                                    <dxEditors:TextEdit EditValue="{Binding LastName, Mode=TwoWay}" />
+                                </Layout:LayoutItem>
+                            </Layout:LayoutGroup>
+                            <Layout:LayoutItem SizeMode="AutoSize">
+                                <Image Source="{Binding ImageSource}" Height="400" Stretch="UniformToFill"/>
+                            </Layout:LayoutItem>
+                        </Layout:LayoutGroup>
+
+                        <Layout:LayoutGroup Header="Contact Info" Orientation="Vertical">
+                            <Layout:LayoutItem Header="Phone:" HeaderPosition="Top" Required="True">
+                                <dxEditors:TextEdit EditValue="{Binding Phone, Mode=TwoWay}" />
+                            </Layout:LayoutItem>
+                            <Layout:LayoutItem Header="Email:" HeaderPosition="Top" Required="True">
+                                <dxEditors:TextEdit EditValue="{Binding EmailAddress, Mode=TwoWay}" />
+                            </Layout:LayoutItem>
+                        </Layout:LayoutGroup>
+                    </Layout:LayoutControl>
+                </DataTemplate>
+            </Layout:TabbedView.ContentTemplate>
+
+        </Layout:TabbedView>
+
+    </Grid>
+</Page>
